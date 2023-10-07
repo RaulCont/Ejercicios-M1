@@ -10,7 +10,7 @@ describe('Una linked list', function() {
   var linkedList;
 
   beforeEach(function() {
-    linkedList = new LinkedList();
+    linkedList = new LinkedList();    
   });
 
   it('tiene metodos `add`, `remove`, y `search`', function() {
@@ -34,20 +34,20 @@ describe('Una linked list', function() {
   });
 
   it('La clase Node deberia tomar un valor como argumento y definir next como null por default', function() {
-    var node = new Node('test');
+    var node = new Node('test');    
     expect(node.value).toBe('test');
     expect(node.next).toBe(null);
   });
 
   it('linkedlist deberia usar la clase Node para agregar nodos en add', function() {
-    linkedList.add('first');
+    linkedList.add('first');    
     expect(linkedList.head instanceof Node).toBe(true);
   });
 
   it('add agrega los elementos linkeandolos entre ellos a traves del next', function() {
     linkedList.add('first');
-    linkedList.add('second');
-    expect(linkedList.head.value).toBe('first');
+    linkedList.add('second');    
+    expect(linkedList.head.value).toBe('first');     
     expect(linkedList.head.next.value).toBe('second');
     expect(linkedList.head.next.next).toBe(null);
   });
@@ -60,7 +60,7 @@ describe('Una linked list', function() {
     linkedList.add('first');
     linkedList.add('second');
     expect(linkedList.remove()).toBe('second');
-    expect(linkedList.remove()).toBe('first');
+    expect(linkedList.remove()).toBe('first');    
   });
 
   it('el head deberia ser null cuando se sacan todos los nodos', function() {
@@ -81,8 +81,7 @@ describe('Una linked list', function() {
     expect(linkedList.search('sdd')).toBe(null);
     expect(linkedList.search('one')).toBe('one');
     expect(linkedList.search('four')).toBe('four');
-  });
-
+  });  
   it('deberia poder tomar strings y funciones ambos como search inputs', function() {
     linkedList.add('one');
     linkedList.add('two');
@@ -134,7 +133,7 @@ describe('HashTable', function() {
     expect(typeof hashTable.hasKey).toBe('function');
   });
 
-  it('deberia `hash` correctament', function() {
+  it('deberia `hash` correctamente', function() {
     // esta funcion hasheadora deberia sumar los key code de las letras de la palabra,
     // y hacer el mod de ese numero por el numero de buckets .
     expect(hashTable.hash('foo')).toBe(9);

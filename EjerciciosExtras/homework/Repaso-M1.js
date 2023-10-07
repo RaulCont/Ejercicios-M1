@@ -16,32 +16,54 @@ const {
 
 var countArray = function(array) {
     // Tu código aca:
-    
+    let suma = 0;
+
+    for(let i = 0; i < array.length; i++) {
+        if(Array.isArray(array[i])) {
+            suma+= countArray(array[i]);
+        } else {
+            suma+= array[i];
+        }
+    }
+    return suma
 }
 
+// console.log(countArray([1, [2, [3,4]], [5,6], 7]));
 
 // Implementar la función countProps: a partir de un objeto en el cual cada propiedad puede contener
 // cualquier tipo de dato, determinar la cantidad de propiedades de objetos en cualquier nivel, ya sea el inicial
 // u objetos anidados
 // Ejemplo:
-// var obj = {
-//   a: {
-//     a1: 10,
-//     a2: 'Franco',
-//     a3: {f: 'r', a: 'n', c: {o: true}}
-//   },
-//   b: 2,
-//   c: [1, {a: 1}, 'Franco']
-// }
+var obj = {
+  a: {
+    a1: 10,
+    a2: 'Franco',
+    a3: {f: 'r', a: 'n', c: {o: true}}
+  },
+  b: 2,
+  c: [1, {a: 1}, 'Franco'],
+  
+}
 // countProps(obj)--> Deberia devolver 10 ya que el objeto inicial tiene 3 propiedades, pero a su vez
 // dentro de a tenemos 3 propiedades mas, luego a3 tiene otras 3 y por ultimo c tiene una extra.
 // Propiedades: a, a1, a2, a3, f, a, c, o, b, c --> 10 en total
 
 var countProps = function(obj) {
     // Tu código aca:
-
+    let counter = 0;
+    
+    for(let prop in obj) {     
+        counter++;   
+        if(typeof obj[prop] === 'object') {
+            if(!Array.isArray(obj[prop])) {
+                counter+= countProps(obj[prop]);
+            }
+        }
+    }
+    return counter;
 }
 
+console.log(countProps(obj));
 
 // Implementar el método changeNotNumbers dentro del prototype de LinkedList que deberá cambiar
 // aquellos valores que no puedan castearse a numeros por 'Kiricocho' y devolver la cantidad de cambios que hizo
@@ -49,11 +71,21 @@ var countProps = function(obj) {
 // Ejemplo 1:
 //    Suponiendo que la lista actual es: Head --> [1] --> ['2'] --> [false] --> ['Franco']
 //    lista.changeNotNumbers();
-//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kirikocho] y la función debería haber devuelto el valor 1
+//    Ahora la lista quedaría: Head --> [1] --> ['2'] --> [false] --> ['Kiricocho] y la función debería haber devuelto el valor 1
 
 LinkedList.prototype.changeNotNumbers = function(){
-    // Tu código aca:
 
+    let current = this.head;
+    let counter = 0;
+
+    while(current) {
+        if(isNaN(Number(current.value))) {
+            current.value = 'Kiricocho';
+            counter++;
+        }
+        current = current.next;
+    }
+    return counter;
 }
 
 
@@ -67,7 +99,17 @@ LinkedList.prototype.changeNotNumbers = function(){
 
 var mergeQueues = function(queueOne, queueTwo) {
     // Tu código aca:
+    let queue = new Queue();
 
+    while(queueOne.size() || queueTwo.size()) {
+        const element = queueOne.dequeue();
+        const element2 = queueTwo.dequeue();
+
+        if(element) queue.enqueue(element);
+        if(element2) queue.enqueue(element2);
+    }
+    
+    return queue;
 }
 
 
@@ -81,16 +123,21 @@ var mergeQueues = function(queueOne, queueTwo) {
 // - multBySix(4) --> 24
 
 var closureMult = function(multiplier) {
-    // Tu código aca:
-
+    return function(num) {
+        return num * multiplier;
+    }
 }
 
 // Implementar el método sum dentro del prototype de BinarySearchTree
 // que debe retornar la suma total de los valores dentro de cada nodo del arbol
 BinarySearchTree.prototype.sum = function() {
     // Tu código aca:
-
-}
+    if(!this.value) return 0;
+    if(!this.left && !this.right) return this.value;
+    if(!this.left && this.right) return this.value + this.right.sum();
+    if(!this.right && this.left) return this.value + this.left.sum();
+    if(this.left && this.right) return this.value + this.left.sum() + this.right.sum();
+};
 
 module.exports = {
     countArray,
